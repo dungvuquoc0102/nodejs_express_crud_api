@@ -7,6 +7,11 @@ const getHomepage = async (req, res) => {
 const getCreateUserPage = (req, res) => {
     return res.render("createUser.ejs");
 };
+const getUpdateUserPage = (req, res) => {
+    const userId = req.params.userId;
+     
+    return res.render("updateUser.ejs");
+};
 const postCreateUser = async (req, res) => {
     let { email, name, city } = req.body;
     try {
@@ -17,4 +22,4 @@ const postCreateUser = async (req, res) => {
     }
 };
 
-module.exports = { getHomepage, getCreateUserPage, postCreateUser };
+module.exports = { getHomepage, getCreateUserPage, getUpdateUserPage, postCreateUser };

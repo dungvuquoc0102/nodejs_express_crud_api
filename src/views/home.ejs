@@ -39,7 +39,10 @@
 					<td>
 						<%= user.city %>
 					</td>
-					<td><button class="button1">Edit</button><button class="button1">Delete</button></td>
+					<td>
+						<a href="/update-user/<%= user.id %>"><button class="button1">Edit</button></a>
+						<button class="button1">Delete</button>
+					</td>
 				</tr>
 				<% }); %>
 		</table>
