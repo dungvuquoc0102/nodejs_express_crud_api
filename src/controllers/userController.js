@@ -1,8 +1,12 @@
 const connection = require("../config/database");
 const { createUser, getAllUser } = require("../services/CRUDUser");
 const getHomepage = async (req, res) => {
-    const results = await getAllUser();
-    return res.render("home.ejs", { userList: results });
+    try {
+        const results = await getAllUser();
+        return res.render("home.ejs", { userList: results });
+    } catch (err) {
+        console.log(err);
+    }
 };
 const getCreateUserPage = (req, res) => {
     return res.render("createUser.ejs");
