@@ -1,5 +1,5 @@
 const connection = require("../config/database");
-const { createUser, getAllUser } = require("../services/CRUDUser");
+const { createUser, getAllUser, getUserById, updateUser } = require("../services/CRUDUser");
 const getHomepage = async (req, res) => {
     try {
         const results = await getAllUser();
@@ -11,10 +11,10 @@ const getHomepage = async (req, res) => {
 const getCreateUserPage = (req, res) => {
     return res.render("createUser.ejs");
 };
-const getUpdateUserPage = (req, res) => {
+const getUpdateUserPage = async (req, res) => {
     const userId = req.params.userId;
-     
-    return res.render("updateUser.ejs");
+    const userUpdate = await getUserById(userId);
+    return res.render("updateUser.ejs", {userUpdate: userUpdate});
 };
 const postCreateUser = async (req, res) => {
     let { email, name, city } = req.body;
@@ -26,4 +26,11 @@ const postCreateUser = async (req, res) => {
     }
 };
 
-module.exports = { getHomepage, getCreateUserPage, getUpdateUserPage, postCreateUser };
+const postUpdateUser = async (req, res) => {
+    const {id, email, name, city} = req.body;
+    const userUpdate = {id, email, name, city};
+    await updateUser(userUpdate);
+    return res.redirect("/");
+};
+
+module.exports = { getHomepage, getCreateUserPage, getUpdateUserPage, postCreateUser, postUpdateUser };
