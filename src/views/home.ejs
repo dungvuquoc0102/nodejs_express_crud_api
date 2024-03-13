@@ -6,6 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Homepage</title>
 	<link rel="stylesheet" href="css/home.css">
+	<script src="https://code.jquery.com/jquery-3.7.0.js"
+		integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -41,7 +43,8 @@
 					</td>
 					<td>
 						<a href="/update-user/<%= user.id %>"><button class="button1">Edit</button></a>
-						<button class="button1">Delete</button>
+						<!-- <a href="/delete-user/<%= user.id %>"><button class="button1">Delete</button></a> -->
+						<button class="button1 btnDelete" data-id="<%= user.id %>">Delete</button>
 					</td>
 				</tr>
 				<% }); %>

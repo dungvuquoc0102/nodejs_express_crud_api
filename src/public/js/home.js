@@ -65,3 +65,22 @@ const mercedes = new Mercedes("Mercedes", 1926, "GLC 300");
 mercedes.name = "Mercedes Electronic";
 
 console.log(mercedes.name);
+
+// $(document).ready(() => {
+//     $(".btnDelete").click(function () {
+//         const userId = $(this).attr("data-id");
+//         // can't not get value of userId
+//         if (confirm("Do you want delete user with id = " + userId + "?")) {
+//             $.get(window.location.href + "delete-user/" + userId, function (data) {
+//                 console.log(data);
+//             });
+//             $(this).closest("tr").remove();
+//         } else {
+//             // Do nothing
+//         }
+//     });
+// });
+
+$(document).ready(function () {
+    $(".btnDelete").click(function () {});
+});
