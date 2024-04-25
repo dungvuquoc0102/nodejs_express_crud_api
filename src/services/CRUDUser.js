@@ -1,9 +1,15 @@
 const connection = require("../config/database");
+const User = require("../models/user");
 
 const createUser = async (userInfo) => {
     if (userInfo.email && userInfo.name && userInfo.city) {
-        let [results, fields] = await connection.query("insert into Users (email, name, city) values (?, ?, ?)", [userInfo.email, userInfo.name, userInfo.city]);
-        return results;
+        // let [results, fields] = await connection.query("insert into Users (email, name, city) values (?, ?, ?)", [userInfo.email, userInfo.name, userInfo.city]);
+        // return results;
+        await User.create({
+            email: userInfo.email,
+            name: userInfo.name,
+            city: userInfo.city
+        });
     } else {
         throw new Error("Missing user information.");
     }

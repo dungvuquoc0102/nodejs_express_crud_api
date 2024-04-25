@@ -2,7 +2,8 @@ const connection = require("../config/database");
 const { createUser, getAllUser, getUserById, updateUser, deleteUser } = require("../services/CRUDUser");
 const getHomepage = async (req, res) => {
     try {
-        const results = await getAllUser();
+        // const results = await getAllUser();
+        const results = [];
         return res.render("home.ejs", { userList: results });
     } catch (err) {
         console.log(err);
