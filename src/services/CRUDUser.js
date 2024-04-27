@@ -16,24 +16,28 @@ const createUser = async (userInfo) => {
 };
 
 const getAllUser = async () => {
-    let [results, fields] = await connection.query("select * from Users");
+    // let [results, fields] = await connection.query("select * from Users");
+    const results = await User.find({});
     return results;
 };
 
 const getUserById = async (userId) => {
-    const [results, fields] = await connection.query("select * from Users where id = ?", [userId]);
-    const userUpdate = results && results.length > 0 ? results[0] : {};
+    // const [results, fields] = await connection.query("select * from Users where id = ?", [userId]);
+    // const userUpdate = results && results.length > 0 ? results[0] : {};
+    const userUpdate = await User.findById(userId).exec();
     return userUpdate;
 };
 
 const updateUser = async (userUpdate) => {
-    const [results, fields] = await connection.query("update Users set email = ?, name = ?, city = ? where id = ?", [userUpdate.email, userUpdate.name, userUpdate.city, userUpdate.id]);
-    return results;
+    // const [results, fields] = await connection.query("update Users set email = ?, name = ?, city = ? where id = ?", [userUpdate.email, userUpdate.name, userUpdate.city, userUpdate.id]);
+    await User.updateOne({ _id: userUpdate.id }, { email: userUpdate.email, name: userUpdate.name, city: userUpdate.city }).exec();
+    // return results;
 };
 
 const deleteUser = async (userId) => {
-    const [results, fields] = await connection.query("delete from Users where id = ?", [userId]);
-    return results;
+    // const [results, fields] = await connection.query("delete from Users where id = ?", [userId]);
+    await User.deleteOne({ _id: userId });
+    // return results;
 };
 
 module.exports = {
