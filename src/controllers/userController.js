@@ -1,5 +1,6 @@
 const connection = require("../config/database");
 const { createUser, getAllUser, getUserById, updateUser, deleteUser } = require("../services/CRUDUser");
+
 const getHomepage = async (req, res) => {
     try {
         const results = await getAllUser();
@@ -31,7 +32,6 @@ const postCreateUser = async (req, res) => {
         console.log(err);
     }
 };
-
 const postUpdateUser = async (req, res) => {
     const { id, email, name, city } = req.body;
     const userUpdate = { id, email, name, city };
