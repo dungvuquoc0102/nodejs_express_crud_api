@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const { storeSingleFile } = require("../services/fileService");
+const { storeSingleFile, storeMultipleFiles } = require("../services/fileService");
 
 const getUsersAPI = async (req, res) => {
     const users = await User.find({});
@@ -39,9 +39,8 @@ const postUploadSingleFileAPI = async (req, res) => {
             data: "No files have been uploaded"
         });
     }
-    const file = req.files.userImg;
     try {
-        await storeSingleFile(file);
+        await storeSingleFile(req.files.image);
         return res.status(200).json({
             EC: 0,
             data: "File uploaded"
@@ -55,4 +54,31 @@ const postUploadSingleFileAPI = async (req, res) => {
     }
 };
 
-module.exports = { getUsersAPI, postCreateUserAPI, putUpdateUserAPI, deleteUserAPI, postUploadSingleFileAPI };
+const postUploadMultipleFilesAPI = async (req, res) => {
+    //check req.files
+    if (!req.files || Object.keys(req.files).length == 0) {
+        return res.status(400).json({
+            EC: 1,
+            data: "No files have been uploaded"
+        });
+    }
+    //save image
+    if (Array.isArray(req.files.image)) {
+        try {
+            const result = await storeMultipleFiles(req.files.image);
+            return res.status(200).json({
+                EC: 0,
+                data: result
+            });
+        } catch (err) {
+            return res.status(500).json({
+                EC: 1,
+                data: "Error for uploading"
+            });
+        }
+    } else {
+        await postUploadSingleFileAPI(req, res);
+    }
+};
+
+module.exports = { getUsersAPI, postCreateUserAPI, putUpdateUserAPI, deleteUserAPI, postUploadSingleFileAPI, postUploadMultipleFilesAPI };
