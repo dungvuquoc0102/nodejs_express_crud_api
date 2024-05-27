@@ -1,5 +1,5 @@
 const connection = require("../config/database");
-const { createUser, getAllUser, getUserById, updateUser, deleteUser } = require("../services/CRUDUser");
+const { createUser, getAllUser, getUserById, updateUser, deleteUser } = require("../services/CRUDUserService");
 
 const getHomepage = async (req, res) => {
     try {

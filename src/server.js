@@ -12,6 +12,7 @@ const port = process.env.PORT || 3001; //1
 configViewEngine(app);
 app.use(express.static("src/public")); //3
 app.use(express.urlencoded({ extended: true })); //4
+app.use(express.json({ type: "application/json", limit: "10mb" }));
 app.use(fileUpload());
 
 app.use("/", webRoutes);

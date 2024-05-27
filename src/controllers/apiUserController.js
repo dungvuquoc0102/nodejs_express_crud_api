@@ -40,10 +40,10 @@ const postUploadSingleFileAPI = async (req, res) => {
         });
     }
     try {
-        await storeSingleFile(req.files.image);
+        const result = await storeSingleFile(req.files.image);
         return res.status(200).json({
             EC: 0,
-            data: "File uploaded"
+            data: result
         });
     } catch (err) {
         console.log(">>> check err: ", err);

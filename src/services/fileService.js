@@ -4,7 +4,23 @@ const storeSingleFile = async (file) => {
     const extName = path.extname(file.name);
     const finalName = path.basename(file.name, extName) + Date.now() + extName;
     const uploadPath = __dirname + "/../public/img/upload/" + finalName;
-    await file.mv(uploadPath);
+    try {
+        await file.mv(uploadPath);
+        return {
+            status: "success",
+            path: finalName,
+            fileName: file.name,
+            error: null
+        };
+    } catch (err) {
+        console.log(err);
+        return {
+            status: "fail",
+            path: null,
+            fileName: file.name,
+            error: JSON.stringify(err)
+        };
+    }
 };
 const storeMultipleFiles = async (filesArr) => {
     let resultArr = [],
