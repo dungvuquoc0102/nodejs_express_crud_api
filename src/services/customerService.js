@@ -10,4 +10,9 @@ const createManyCustomersService = async (customersArray) => {
     return result;
 };
 
-module.exports = { createSingleCustomer, createManyCustomersService };
+const getCustomersService = async () => {
+    const result = await Customer.find({});
+    return result;
+};
+
+module.exports = { createSingleCustomer, createManyCustomersService, getCustomersService };
