@@ -15,4 +15,8 @@ const getCustomersService = async () => {
     return result;
 };
 
-module.exports = { createSingleCustomer, createManyCustomersService, getCustomersService };
+const updateACustomerService = async (customer) => {
+    return await Customer.updateOne({ _id: customer._id }, { name: customer.name, address: customer.address });
+};
+
+module.exports = { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService };

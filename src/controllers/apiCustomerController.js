@@ -1,5 +1,5 @@
 const { storeSingleFile } = require("../services/fileService");
-const { createSingleCustomer, createManyCustomersService, getCustomersService } = require("../services/customerService");
+const { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService } = require("../services/customerService");
 
 const postCreateCustomerAPI = async (req, res) => {
     const { email, name, city, phone } = req.body;
@@ -63,4 +63,21 @@ const getCustomersAPI = async (req, res) => {
     }
 };
 
-module.exports = { postCreateCustomerAPI, postCreateManyCustomersAPI, getCustomersAPI };
+const updateACustomerAPI = async (req, res) => {
+    try {
+        const { _id, name, address } = req.body;
+        const result = await updateACustomerService({ _id, name, address });
+        return res.status(200).json({
+            EC: 0,
+            data: result
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            EC: 1,
+            data: "Error for updating customer"
+        });
+    }
+};
+
+module.exports = { postCreateCustomerAPI, postCreateManyCustomersAPI, getCustomersAPI, updateACustomerAPI };
