@@ -1,5 +1,5 @@
 const { storeSingleFile } = require("../services/fileService");
-const { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService } = require("../services/customerService");
+const { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService, deleteACustomerService } = require("../services/customerService");
 
 const postCreateCustomerAPI = async (req, res) => {
     const { email, name, city, phone } = req.body;
@@ -80,4 +80,24 @@ const updateACustomerAPI = async (req, res) => {
     }
 };
 
-module.exports = { postCreateCustomerAPI, postCreateManyCustomersAPI, getCustomersAPI, updateACustomerAPI };
+const deleteACustomerAPI = async (req, res) => {
+    try {
+        const result = await deleteACustomerService(req.body.id);
+        return res.status(200).json({
+            EC: 0,
+            data: result
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            EC: 1,
+            data: "Error for deleting customer"
+        });
+    }
+};
+
+const deleteManyCustomersAPI = async (req, res) => {
+    res.send("Hello");
+};
+
+module.exports = { postCreateCustomerAPI, postCreateManyCustomersAPI, getCustomersAPI, updateACustomerAPI, deleteACustomerAPI, deleteManyCustomersAPIs };

@@ -1,5 +1,6 @@
-//add library mongoose
+//add library mongoose, mongoose-delete
 const mongoose = require("mongoose");
+const mongoose_delete = require("mongoose-delete");
 //create a schema
 const customerSchema = new mongoose.Schema(
     {
@@ -12,6 +13,8 @@ const customerSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+//add plugin to schema - more query can do with plugin
+customerSchema.plugin(mongoose_delete, { overrideMethods: "all" });
 //create a model
 const Customer = mongoose.model("Customer", customerSchema);
 //export that model
