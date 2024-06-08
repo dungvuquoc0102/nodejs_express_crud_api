@@ -10,9 +10,13 @@ const createManyCustomersService = async (customersArray) => {
     return result;
 };
 
-const getCustomersService = async () => {
-    const result = await Customer.find({});
-    return result;
+const getCustomersService = async (limit, page) => {
+    if (limit && page) {
+        const offset = (page - 1) * limit;
+        return await Customer.find({}).skip(offset).limit(limit);
+    } else {
+        return await Customer.find({});
+    }
 };
 
 const updateACustomerService = async (customer) => {
@@ -23,4 +27,8 @@ const deleteACustomerService = async (id) => {
     return await Customer.deleteById(id);
 };
 
-module.exports = { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService, deleteACustomerService };
+const deleteManyCustomersService = async (idArr) => {
+    return await Customer.delete({ _id: { $in: idArr } });
+};
+
+module.exports = { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService, deleteACustomerService, deleteManyCustomersService };

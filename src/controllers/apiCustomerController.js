@@ -1,5 +1,5 @@
 const { storeSingleFile } = require("../services/fileService");
-const { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService, deleteACustomerService } = require("../services/customerService");
+const { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService, deleteACustomerService, deleteManyCustomersService } = require("../services/customerService");
 
 const postCreateCustomerAPI = async (req, res) => {
     const { email, name, city, phone } = req.body;
@@ -48,18 +48,36 @@ const postCreateManyCustomersAPI = async (req, res) => {
 };
 
 const getCustomersAPI = async (req, res) => {
-    try {
-        const customers = await getCustomersService();
-        return res.status(200).json({
-            EC: 0,
-            data: customers
-        });
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({
-            EC: 1,
-            data: "Error for getting customers"
-        });
+    const { limit, page } = req.query;
+    let customers = null;
+    if (limit && page) {
+        try {
+            customers = await getCustomersService(limit, page);
+            return res.status(200).json({
+                EC: 0,
+                data: customers
+            });
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({
+                EC: 1,
+                data: "Error for getting customers"
+            });
+        }
+    } else {
+        try {
+            customers = await getCustomersService();
+            return res.status(200).json({
+                EC: 0,
+                data: customers
+            });
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({
+                EC: 1,
+                data: "Error for getting customers"
+            });
+        }
     }
 };
 
@@ -97,7 +115,19 @@ const deleteACustomerAPI = async (req, res) => {
 };
 
 const deleteManyCustomersAPI = async (req, res) => {
-    res.send("Hello");
+    try {
+        const result = await deleteManyCustomersService(req.body.customers);
+        return res.status(200).json({
+            EC: 0,
+            data: result
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            EC: 1,
+            data: "Error for deleting customers"
+        });
+    }
 };
 
-module.exports = { postCreateCustomerAPI, postCreateManyCustomersAPI, getCustomersAPI, updateACustomerAPI, deleteACustomerAPI, deleteManyCustomersAPIs };
+module.exports = { postCreateCustomerAPI, postCreateManyCustomersAPI, getCustomersAPI, updateACustomerAPI, deleteACustomerAPI, deleteManyCustomersAPI };
