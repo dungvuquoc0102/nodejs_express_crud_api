@@ -10,10 +10,10 @@ const createManyCustomersService = async (customersArray) => {
     return result;
 };
 
-const getCustomersService = async (limit, page) => {
-    if (limit && page) {
-        const offset = (page - 1) * limit;
-        return await Customer.find({}).skip(offset).limit(limit);
+const getCustomersService = async (limit, skip, filter) => {
+    if (limit && skip && filter) {
+        const offset = (skip - 1) * limit;
+        return await Customer.find(filter).skip(offset).limit(limit).exec();
     } else {
         return await Customer.find({});
     }

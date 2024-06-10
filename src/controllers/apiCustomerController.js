@@ -1,5 +1,6 @@
 const { storeSingleFile } = require("../services/fileService");
 const { createSingleCustomer, createManyCustomersService, getCustomersService, updateACustomerService, deleteACustomerService, deleteManyCustomersService } = require("../services/customerService");
+const aqp = require("api-query-params");
 
 const postCreateCustomerAPI = async (req, res) => {
     const { email, name, city, phone } = req.body;
@@ -48,11 +49,12 @@ const postCreateManyCustomersAPI = async (req, res) => {
 };
 
 const getCustomersAPI = async (req, res) => {
-    const { limit, page } = req.query;
+    const query = aqp(req.query);
+    const { limit, skip, filter } = query;
     let customers = null;
-    if (limit && page) {
+    if (limit && skip && filter) {
         try {
-            customers = await getCustomersService(limit, page);
+            customers = await getCustomersService(limit, skip, filter);
             return res.status(200).json({
                 EC: 0,
                 data: customers
